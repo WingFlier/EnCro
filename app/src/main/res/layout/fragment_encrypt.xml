@@ -1,0 +1,29 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="wingfly.com.encro.EncryptFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <AutoCompleteTextView
+                android:id="@+id/data_to_encr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="10"/>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btn_encr_copy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Encrypt &amp; copy"/>
+    </LinearLayout>
+</FrameLayout>

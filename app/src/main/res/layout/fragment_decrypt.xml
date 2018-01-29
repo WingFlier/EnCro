@@ -1,0 +1,58 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="wingfly.com.encro.DecryptFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <AutoCompleteTextView
+                android:id="@+id/decryptData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="4"/>
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/txtPaste"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="15dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="paste"
+            android:textColor="@color/colorPaste"/>
+
+        <Button
+            android:id="@+id/btnDecrypt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Decrypt"/>
+
+        <TextView
+            android:id="@+id/txtResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/resultCopy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="15dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Copy the result"
+            android:textColor="@color/colorPaste"/>
+    </LinearLayout>
+
+
+</FrameLayout>
