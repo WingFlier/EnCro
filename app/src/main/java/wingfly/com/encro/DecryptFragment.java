@@ -87,7 +87,11 @@ public class DecryptFragment extends Fragment implements View.OnClickListener
                 break;
             case R.id.btnDecrypt:
                 String data = decryptData.getText().toString();
-                txtResult.setText(Encryptor.decrypt(Constants.KEY, data));
+                if (!data.equals(""))
+                {
+                    getView().findViewById(R.id.scroll).setVisibility(View.VISIBLE);
+                    txtResult.setText(Encryptor.decrypt(Constants.KEY, data));
+                }
                 break;
             case R.id.resultCopy:
                 // copy txtResult.getText().toString() to clipboard
