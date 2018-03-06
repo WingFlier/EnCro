@@ -83,5 +83,6 @@ public class EncryptFragment extends Fragment
                         .hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
         });
+
     }
 }

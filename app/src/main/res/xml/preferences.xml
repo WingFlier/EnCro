@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
+
+    <EditTextPreference
+        android:id="@+id/userName"
+        android:key="add_person"
+        android:title="Person Name"/>
+
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/listArray"
+        android:entryValues="@array/listArray"
+        android:key="friendList"
+        android:summary="Change the person you are talking to"
+        android:title="Friend list"/>
+</PreferenceScreen>
