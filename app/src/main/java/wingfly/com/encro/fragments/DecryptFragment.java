@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -108,7 +109,8 @@ public class DecryptFragment extends Fragment implements View.OnClickListener
                     String friend = defaultSharedPreferences.getString("friendList", null);
                     if (friend == null || friend.equals("1"))
                     {
-                        Toast.makeText(context, "Choose a person from settings", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(getView(), "Choose a person from settings", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
                         return;
                     }
 
@@ -123,7 +125,8 @@ public class DecryptFragment extends Fragment implements View.OnClickListener
                     ((ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE))
                             .setPrimaryClip(ClipData.newPlainText("desc", text
                             ));
-                    Toast.makeText(getContext(), "Copied", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(getView(), "Copied", Snackbar.LENGTH_SHORT)
+                            .setAction("Action", null).show();
                 }
                 break;
         }

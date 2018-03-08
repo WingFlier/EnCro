@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.preference.EditTextPreference;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
@@ -76,7 +77,8 @@ public class UserPreferences extends PreferenceFragmentCompat
                 String[] friendKeys = database.getFriendKeys();
                 if (friendNames.length < 1)
                 {
-                    Toast.makeText(getActivity().getApplicationContext(), "No friends added", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(getView(), "No friends", Snackbar.LENGTH_SHORT)
+                            .setAction("Action", null).show();
                     return false;
                 }
                 friendList.setEntries(friendNames);
@@ -99,7 +101,8 @@ public class UserPreferences extends PreferenceFragmentCompat
                     manualChoose();
                 } else
                 {
-                    Toast.makeText(getContext(), "Not ready yet", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(getView(), "Not ready yet", Snackbar.LENGTH_SHORT)
+                            .setAction("Action", null).show();
                 }
                 return true;
             }
@@ -129,7 +132,8 @@ public class UserPreferences extends PreferenceFragmentCompat
                                         Encryptor.encrypt(Constants.NDK_KEY, Constants.randomStr()));
 //                                add a friend to db
                                 database.add(friend);
-                                Toast.makeText(getActivity().getApplicationContext(), "new friend added", Toast.LENGTH_SHORT).show();
+                                Snackbar.make(getView(), "New friend added", Snackbar.LENGTH_SHORT)
+                                        .setAction("Action", null).show();
                                 dialog.dismiss();
                             }
                         })
