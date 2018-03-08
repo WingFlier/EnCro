@@ -1,12 +1,19 @@
 package wingfly.com.encro.Settings;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.preference.EditTextPreference;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
+import android.text.InputType;
+import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.takisoft.fix.support.v7.preference.PreferenceFragmentCompat;
 
 import wingfly.com.encro.Constants;
@@ -36,10 +43,7 @@ public class UserPreferences extends PreferenceFragmentCompat
                 */
 
                 if (newValue == null || newValue.toString().trim().equals("")) return false;
-                Friend friend = new Friend(String.valueOf(newValue), Encryptor.encrypt(Constants.NDK_KEY, Constants.randomStr()));
-                // add a friend to db
-                database.add(friend);
-                Toast.makeText(getActivity().getApplicationContext(), "new friend added", Toast.LENGTH_SHORT).show();
+                dialogMultiChoice(database, newValue);
                 return true;
             }
         });
@@ -80,5 +84,64 @@ public class UserPreferences extends PreferenceFragmentCompat
                 return true;
             }
         });
+    }
+
+    private void dialogMultiChoice(final Database database, final Object newValue)
+    {
+        final MaterialDialog.ListCallbackSingleChoice callbackSingleChoice = new MaterialDialog.ListCallbackSingleChoice()
+        {
+            @Override
+            public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text)
+            {
+                Log.e("logging_tag", text + " " + which);
+                if (which == 0)
+                {
+                    manualChoose();
+                } else
+                {
+                    Toast.makeText(getContext(), "Not ready yet", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            }
+
+            private void manualChoose()
+            {
+                new MaterialDialog.Builder(getContext())
+                        .title(R.string.input)
+                        .inputRange(16, 16, Color.RED)
+                        .content("Make sure to enter same key on both devices")
+                        .inputType(InputType.TYPE_CLASS_TEXT)
+                        .input("Key here", null, new MaterialDialog.InputCallback()
+                        {
+                            @Override
+                            public void onInput(@NonNull MaterialDialog dialog, CharSequence input)
+                            {
+                                // leave blank and validate on click
+                            }
+                        })
+                        .autoDismiss(false)
+                        .onPositive(new MaterialDialog.SingleButtonCallback()
+                        {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which)
+                            {
+                                Friend friend = new Friend(String.valueOf(newValue),
+                                        Encryptor.encrypt(Constants.NDK_KEY, Constants.randomStr()));
+//                                add a friend to db
+                                database.add(friend);
+                                Toast.makeText(getActivity().getApplicationContext(), "new friend added", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+            }
+        };
+        new MaterialDialog.Builder(getContext())
+                .title(R.string.dialog_title)
+                .items(R.array.items)
+                .cancelable(false)
+                .itemsCallbackSingleChoice(-1, callbackSingleChoice)
+                .positiveText(R.string.choose)
+                .show();
     }
 }

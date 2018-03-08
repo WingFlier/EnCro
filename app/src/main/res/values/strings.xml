@@ -6,8 +6,9 @@
     <string name="encrypt">Encrypt</string>
     <string name="decrypt">Decrypt</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="settings">Settings</string>
     <string name="no_friends_yet">No friends yet</string>
+    <string name="dialog_title">Choose method of generating a key</string>
+    <string name="choose">Ok</string>
+    <string name="input">Enter key</string>
 </resources>
