@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
 
-import wingfly.com.encro.Constants;
 import wingfly.com.encro.R;
 import wingfly.com.encro.encryption.Encryptor;
 
@@ -84,14 +84,15 @@ public class EncryptFragment extends Fragment
                 String data = textView.getText().toString();
                 if (data.equals("")) return;
 
-                String friendList = defaultSharedPreferences.getString("friendList", null);
-                if (friendList == null)
+                String friend = defaultSharedPreferences.getString("friendList", null);
+                if (friend == null || friend.equals("1"))
                 {
                     Toast.makeText(context, "Choose a person from settings", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                String encrypted = Encryptor.encrypt(friendList, data);
+                Log.d("EncryptFragment", friend);
+                String encrypted = Encryptor.encrypt(friend, data);
 
                 // copy encrypted to clipboard
                 ((ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE))

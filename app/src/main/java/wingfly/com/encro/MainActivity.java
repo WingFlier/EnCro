@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import wingfly.com.encro.Settings.UserPreferences;
-import wingfly.com.encro.databases.Database;
 import wingfly.com.encro.databases.DbHandler;
 import wingfly.com.encro.fragments.DecryptFragment;
 import wingfly.com.encro.fragments.EncryptFragment;
@@ -63,7 +62,6 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().hide();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frame_layout, EncryptFragment.newInstance(null, null), null).commit();
-
         DbHandler.newInstance(MainActivity.this);
     }
 }

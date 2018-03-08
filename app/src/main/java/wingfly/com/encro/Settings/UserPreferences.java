@@ -31,10 +31,9 @@ public class UserPreferences extends PreferenceFragmentCompat
             public boolean onPreferenceChange(Preference preference, Object newValue)
             {
                 /*TODO yet we're just adding newValue to the db
-                but we should ask whether synchronize via bluetooth or enter the encryption
-                key manually*/
+                but we should ask whether synchronize via bluetooth or enter the encryption key manually*/
                 if (newValue == null || newValue.toString().trim().equals("")) return false;
-                Friend friend = new Friend(String.valueOf(newValue), Encryptor.encrypt(Constants.NDK_KEY, "12346"));
+                Friend friend = new Friend(String.valueOf(newValue), Encryptor.encrypt(Constants.NDK_KEY, Constants.KEY));
                 // add a friend to db
                 database.add(friend);
                 Toast.makeText(getActivity().getApplicationContext(), "new friend added", Toast.LENGTH_SHORT).show();
@@ -55,21 +54,23 @@ public class UserPreferences extends PreferenceFragmentCompat
 
         final ListPreference friendList = (ListPreference) findPreference("friendList");
 
+        friendList.setEntries(database.getFriendNames());
+        friendList.setEntryValues(database.getFriendKeys());
+
         friendList.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
         {
             @Override
             public boolean onPreferenceClick(Preference preference)
             {
-                //TODO write getFriendKeys function and change 72 line to that array (decrypt before)
-                Toast.makeText(getActivity().getApplicationContext(), friendList.getValue(), Toast.LENGTH_SHORT).show();
                 String[] friendNames = database.getFriendNames();
+                String[] friendKeys = database.getFriendKeys();
                 if (friendNames.length < 1)
                 {
                     Toast.makeText(getActivity().getApplicationContext(), "No friends added", Toast.LENGTH_SHORT).show();
                     return false;
                 }
                 friendList.setEntries(friendNames);
-                friendList.setEntryValues(friendNames);
+                friendList.setEntryValues(friendKeys);
                 return true;
             }
         });

@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.LinkedList;
-import java.util.List;
 
 import wingfly.com.encro.Constants;
 import wingfly.com.encro.POJO_s.Friend;
@@ -15,7 +14,7 @@ import wingfly.com.encro.encryption.Encryptor;
 
 public class Database extends SQLiteOpenHelper
 {
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     private static final String DATABASE_NAME = "friendList";
 
     public static final String TABLE_FRIENDS = "friends";
@@ -62,10 +61,28 @@ public class Database extends SQLiteOpenHelper
         {
             do
             {
+                String string = cursor.getString(0);
+                linkedList.add(string);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return linkedList.toArray(new String[]{});
+    }
+
+    public String[] getFriendKeys()
+    {
+        LinkedList<String> linkedList = new LinkedList<>();
+        String query = "SELECT %s FROM " + TABLE_FRIENDS;
+        Cursor cursor = this.getReadableDatabase().rawQuery(String.format(query, KEY), null);
+        if (cursor.moveToFirst())
+        {
+            do
+            {
                 String string = Encryptor.decrypt(Constants.NDK_KEY, cursor.getString(0));
                 linkedList.add(string);
             } while (cursor.moveToNext());
         }
+        cursor.close();
         return linkedList.toArray(new String[]{});
     }
 }

@@ -4,7 +4,9 @@ package wingfly.com.encro.fragments;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -30,6 +32,9 @@ public class DecryptFragment extends Fragment implements View.OnClickListener
     AutoCompleteTextView decryptData;
     Button btnDecrypt;
     TextView txtPaste, txtResult, resultCopy;
+
+    private Context context;
+    private SharedPreferences defaultSharedPreferences;
 
     public DecryptFragment()
     {
@@ -77,6 +82,11 @@ public class DecryptFragment extends Fragment implements View.OnClickListener
         txtPaste.setOnClickListener(this);
         btnDecrypt.setOnClickListener(this);
         resultCopy.setOnClickListener(this);
+
+        context = getActivity().getApplicationContext();
+        defaultSharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(
+                        context);
     }
 
     @Override
@@ -94,7 +104,15 @@ public class DecryptFragment extends Fragment implements View.OnClickListener
                 if (!data.equals(""))
                 {
                     getView().findViewById(R.id.scroll).setVisibility(View.VISIBLE);
-                    txtResult.setText(Encryptor.decrypt(Constants.KEY, data));
+
+                    String friend = defaultSharedPreferences.getString("friendList", null);
+                    if (friend == null || friend.equals("1"))
+                    {
+                        Toast.makeText(context, "Choose a person from settings", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    txtResult.setText(Encryptor.decrypt(friend, data));
                 }
                 break;
             case R.id.resultCopy:
