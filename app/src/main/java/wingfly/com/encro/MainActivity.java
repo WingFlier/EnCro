@@ -1,19 +1,24 @@
 package wingfly.com.encro;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import wingfly.com.encro.Settings.UserPreferences;
+import wingfly.com.encro.databases.Database;
+import wingfly.com.encro.databases.DbHandler;
+import wingfly.com.encro.fragments.DecryptFragment;
+import wingfly.com.encro.fragments.EncryptFragment;
+
 public class MainActivity extends AppCompatActivity
 {
 
     /* TODO future plans
-    *  add user and generate a key for each of them (need some synchronization to add same key on his device too)
+    *  add user and generate a key for each of them (need some synchronization to add same key on the other device) maybe bluetooth?
+    *  or give them opportunity to enter the key manually 16 length long
     *  change user you are now talking (change key for encryption in the background)
     *  delete a user?
     *  database for storing users and their keys (encrypted of course)
@@ -32,7 +37,6 @@ public class MainActivity extends AppCompatActivity
             {
                 case R.id.encrypt:
                     fragment = EncryptFragment.newInstance(null, null);
-//                TODO    SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
                     break;
                 case R.id.decrypt:
                     fragment = DecryptFragment.newInstance(null, null);
@@ -59,5 +63,7 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().hide();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frame_layout, EncryptFragment.newInstance(null, null), null).commit();
+
+        DbHandler.newInstance(MainActivity.this);
     }
 }

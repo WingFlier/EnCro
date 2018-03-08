@@ -1,10 +1,12 @@
-package wingfly.com.encro;
+package wingfly.com.encro.fragments;
 
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,6 +16,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
+
+import wingfly.com.encro.Constants;
+import wingfly.com.encro.R;
+import wingfly.com.encro.encryption.Encryptor;
 
 public class EncryptFragment extends Fragment
 {
@@ -69,10 +75,23 @@ public class EncryptFragment extends Fragment
             @Override
             public void onClick(View view)
             {
+                final Context context = getActivity().getApplicationContext();
+                SharedPreferences defaultSharedPreferences =
+                        PreferenceManager.getDefaultSharedPreferences(
+                                context);
+
+
                 String data = textView.getText().toString();
                 if (data.equals("")) return;
 
-                String encrypted = Encryptor.encrypt(Constants.KEY, data);
+                String friendList = defaultSharedPreferences.getString("friendList", null);
+                if (friendList == null)
+                {
+                    Toast.makeText(context, "Choose a person from settings", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                String encrypted = Encryptor.encrypt(friendList, data);
 
                 // copy encrypted to clipboard
                 ((ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE))

@@ -1,10 +1,12 @@
-package wingfly.com.encro;
+package wingfly.com.encro.encryption;
 
 import android.util.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+
+import wingfly.com.encro.Constants;
 
 public class Encryptor
 {

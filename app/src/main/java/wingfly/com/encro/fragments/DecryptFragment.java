@@ -1,4 +1,4 @@
-package wingfly.com.encro;
+package wingfly.com.encro.fragments;
 
 
 import android.content.ClipData;
@@ -14,6 +14,10 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import wingfly.com.encro.Constants;
+import wingfly.com.encro.encryption.Encryptor;
+import wingfly.com.encro.R;
 
 public class DecryptFragment extends Fragment implements View.OnClickListener
 {
