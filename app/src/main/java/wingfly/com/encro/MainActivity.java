@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 
 import wingfly.com.encro.Settings.UserPreferences;
@@ -18,10 +19,7 @@ public class MainActivity extends AppCompatActivity
     /* TODO future plans
     *  add user and generate a key for each of them (need some synchronization to add same key on the other device) maybe bluetooth?
     *  or give them opportunity to enter the key manually 16 length long
-    *  change user you are now talking (change key for encryption in the background)
     *  delete a user?
-    *  database for storing users and their keys (encrypted of course)
-    *  store key for user encryption in ndk
     * */
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener()
@@ -63,5 +61,10 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frame_layout, EncryptFragment.newInstance(null, null), null).commit();
         DbHandler.newInstance(MainActivity.this);
+
+        Log.e("logging_tag", Constants.randomStr());
+        Log.e("logging_tag", Constants.randomStr());
+        Log.e("logging_tag", Constants.randomStr());
+        Log.e("logging_tag", Constants.randomStr());
     }
 }

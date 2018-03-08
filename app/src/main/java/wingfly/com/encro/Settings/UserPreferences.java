@@ -31,9 +31,12 @@ public class UserPreferences extends PreferenceFragmentCompat
             public boolean onPreferenceChange(Preference preference, Object newValue)
             {
                 /*TODO yet we're just adding newValue to the db
-                but we should ask whether synchronize via bluetooth or enter the encryption key manually*/
+                but we should ask whether synchronize via bluetooth or enter the encryption key manually
+                * TODO never let user have 2 identical keys
+                */
+
                 if (newValue == null || newValue.toString().trim().equals("")) return false;
-                Friend friend = new Friend(String.valueOf(newValue), Encryptor.encrypt(Constants.NDK_KEY, Constants.KEY));
+                Friend friend = new Friend(String.valueOf(newValue), Encryptor.encrypt(Constants.NDK_KEY, Constants.randomStr()));
                 // add a friend to db
                 database.add(friend);
                 Toast.makeText(getActivity().getApplicationContext(), "new friend added", Toast.LENGTH_SHORT).show();
@@ -54,8 +57,11 @@ public class UserPreferences extends PreferenceFragmentCompat
 
         final ListPreference friendList = (ListPreference) findPreference("friendList");
 
+
         friendList.setEntries(database.getFriendNames());
         friendList.setEntryValues(database.getFriendKeys());
+
+//        friendList.findIndexOfValue()
 
         friendList.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
         {
