@@ -2,6 +2,6 @@
 <resources>
     <string-array name="items">
         <item>Enter key manually</item>
-        <item>Use bluetooth</item>
+        <item>Paste shared key</item>
     </string-array>
 </resources>
